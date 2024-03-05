@@ -5,8 +5,6 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from db import get_db, User, Post, Comment
-
 app = FastAPI()
 
 
@@ -17,7 +15,7 @@ class User(BaseModel):
     email: str
     password: str
     create_data_account: str
-    id_posts: List[int] = []
+
 
 
 class Post(BaseModel):
