@@ -1,28 +1,29 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
 from db_create import create_tables, delete_tables
+from datetime import datetime
+from typing import List
 
 app = FastAPI()
 
-# Функция для создания таблиц при запуске приложения
-async def on_startup():
-    await create_tables()
-    print("База данных готова к работе")
-
-# Функция для удаления таблиц при остановке приложения
-async def on_shutdown():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await delete_tables()
     print("База данных очищена")
+    await create_tables()
+    print("База данных готова к работе")
+    yield
+    print("Выключение")
 
-# Добавление обработчиков событий жизненного цикла
-app.add_event_handler("startup", on_startup)
-app.add_event_handler("shutdown", on_shutdown)
+@app.on_event("startup")
+async def startup_event():
+    await create_tables()
 
-@app.get("/home")
-def get_home():
-    return "Привет"
+@app.on_event("shutdown")
+async def shutdown_event():
+    await delete_tables()
 
-# Модели данных
 class users(BaseModel):
     id_user: int
     username: str
@@ -42,5 +43,3 @@ class comments(BaseModel):
     content: str
     author: users
     date_of_publication: str
-
-# Остальной код вашего FastAPI приложения...

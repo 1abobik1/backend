@@ -5,8 +5,10 @@ from sqlalchemy.orm import DeclarativeBase, relationship
 engine = create_async_engine("sqlite+aiosqlite:///database.db", echo=True)
 new_session = async_sessionmaker(engine, expire_on_commit=False)
 
+
 class Model(DeclarativeBase):
     pass
+
 
 class UsersTable(Model):
     __tablename__ = "UsersTable"
@@ -15,7 +17,8 @@ class UsersTable(Model):
     username = Column(String)
     email = Column(String)
     password = Column(String)
-    create_data_account = Column(String)
+    posts = relationship("PostsTable", back_populates="author")
+
 
 class PostsTable(Model):
     __tablename__ = "PostsTable"
@@ -27,6 +30,7 @@ class PostsTable(Model):
     author_id = Column(Integer, ForeignKey('UsersTable.id'))
     author = relationship("UsersTable", back_populates="posts")
 
+
 class CommentsTable(Model):
     __tablename__ = "CommentsTable"
 
@@ -36,9 +40,11 @@ class CommentsTable(Model):
     author = relationship("UsersTable")
     date_of_publication = Column(Integer)
 
+
 async def create_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Model.metadata.create_all)
+
 
 async def delete_tables():
     async with engine.begin() as conn:
