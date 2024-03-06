@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e736971-267a-4a10-994d-d17a7f86a5c5" name="Changes" comment="settings">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db_management.py" afterDir="false" />
+    <list default="true" id="0e736971-267a-4a10-994d-d17a7f86a5c5" name="Changes" comment="create db using an sqlalchemy(created file - db_create.py)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_create.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_create.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlite_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_create.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +57,11 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dima1\PycharmProjects\backend\venv\Scripts" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="pip install -r .\requirements.txt" />
@@ -165,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709716450970</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="create db using an sqlalchemy(created file - db_create.py)">
+      <option name="closed" value="true" />
+      <created>1709721163481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709721163481</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -185,6 +194,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fsdfsdf" />
     <MESSAGE value="settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="settings" />
+    <MESSAGE value="create db using an sqlalchemy(created file - db_create.py)" />
+    <option name="LAST_COMMIT_MESSAGE" value="create db using an sqlalchemy(created file - db_create.py)" />
   </component>
 </project>
