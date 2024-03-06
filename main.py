@@ -2,8 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 from db_create import create_tables, delete_tables
-from datetime import datetime
-from typing import List
 
 app = FastAPI()
 
