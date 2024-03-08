@@ -1,43 +1,77 @@
-from fastapi import FastAPI
+from fastapi import HTTPException, Depends, FastAPI
+from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from contextlib import asynccontextmanager
-from db_create import create_tables, delete_tables
+from database import SessionLocal, engine
+import models_db
+from fastapi.middleware.cors import CORSMiddleware
+from typing import Optional
 
 app = FastAPI()
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await delete_tables()
-    print("База данных очищена")
-    await create_tables()
-    print("База данных готова к работе")
-    yield
-    print("Выключение")
+origins = {
+    'http://localhost:300'
+}
 
-@app.on_event("startup")
-async def startup_event():
-    await create_tables()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+)
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    await delete_tables()
 
-class users(BaseModel):
-    id_user: int
-    username: str
+class UsersBase(BaseModel):
     email: str
     password: str
-    create_data_account: str
 
-class posts(BaseModel):
-    id_post: int
+
+class PostBase(BaseModel):
     title: str
-    content: str
-    date_of_publication: str
-    author: users
+    picture: str
 
-class comments(BaseModel):
-    id_comments: int
-    content: str
-    author: users
-    date_of_publication: str
+
+class UserModel(UsersBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
+class PostModel(PostBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+db_dependency = Depends(get_db)
+
+# создание бд
+models_db.Base.metadata.create_all(bind=engine)
+
+# очистка бд
+# models_db.Base.metadata.drop_all(bind=engine)
+
+
+@app.post("/user/", response_model=UserModel)
+async def create_user(User: UserModel, db: Session = db_dependency):
+    db_user = models_db.UsersTable(**User.dict())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+@app.post("/post/", response_model=PostModel)
+async def create_post(Post: PostModel, db: Session = db_dependency):
+    db_post = models_db.PostsTable(**Post.dict())
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
